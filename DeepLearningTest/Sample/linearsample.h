@@ -5,7 +5,7 @@
 #pragma once
 #include <vector>
 #include <tuple>
-#include <glm/glm.hpp>
+#include <Eigen/Dense>
 #include "../Model/parameter.h"
 #include "../define.h"
 namespace Dtrain {
@@ -13,7 +13,7 @@ namespace Dtrain {
 	class DTRAIN_API LinearSample {
 	public:
 		static LinearModelParameter GetLinearSample(int sampleSize, const LinearModelRandomRange& randomRange,
-			std::vector<glm::dvec2>& features, std::vector<double>& labels);
+			std::vector<Eigen::VectorXd>& features, std::vector<double>& labels);
 		//count x1 x2 y2
 
 	private:

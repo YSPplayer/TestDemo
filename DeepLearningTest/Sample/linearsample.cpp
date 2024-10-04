@@ -14,7 +14,7 @@ namespace Dtrain {
 	/// <param name="x2Range"></param>
 	/// <param name="features"></param>
 	/// <param name="labels"></param>
-	LinearModelParameter LinearSample::GetLinearSample(int sampleSize, const LinearModelRandomRange& randomRange, std::vector<glm::dvec2>& features, std::vector<double>& labels) {
+	LinearModelParameter LinearSample::GetLinearSample(int sampleSize, const LinearModelRandomRange& randomRange, std::vector<Eigen::VectorXd>& features, std::vector<double>& labels) {
 		//初始化模型参数
 		LinearModelParameter mParameter;
 		mParameter.w1 = Util::GetRandomNumber<double>(std::get<0>(randomRange.w1Range), std::get<1>(randomRange.w1Range));
@@ -25,8 +25,10 @@ namespace Dtrain {
 			double x1 = Util::GetRandomNumber<double>(std::get<0>(randomRange.x1Range), std::get<1>(randomRange.x1Range));
 			double x2 = Util::GetRandomNumber<double>(std::get<0>(randomRange.x2Range), std::get<1>(randomRange.x2Range));
 			double noise = Util::GetRandomNumber<double>(0.0, 0.01);//额外噪声项
-			double y = mParameter.w1 * x1 + mParameter.w2 * x2 + mParameter.b + noise; //线性模型结果
-			features.push_back(glm::vec2(x1, x2)); // 特征
+			double y = mParameter.w1 * x1 + mParameter.w2 * x2 + mParameter.b + noise; //线性模型结果	
+			Eigen::VectorXd feature(2); // 这里设定特征的维度为2
+			feature << x1, x2; // 将x1和x2赋值到特征向量中
+			features.push_back(feature); // 特征
 			labels.push_back(y); //房价
 		}
 		return mParameter;
